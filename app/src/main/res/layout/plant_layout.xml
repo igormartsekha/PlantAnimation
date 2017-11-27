@@ -5,17 +5,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_red_dark">
+    android:background="@drawable/background_gradient">
 
     <FrameLayout
         android:id="@+id/plant_branch_1"
         android:layout_width="75dp"
         android:layout_height="75dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="173dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/border"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
     </FrameLayout>
+
+    <com.example.imartsekha.plantanimation.customviews.PlantView
+        android:id="@+id/plant_tree"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="100dp"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        app:bottomTreeHeight="40dp"
+        app:circleColor="#8b69c9"
+        app:circleRadius="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:lineColor="#8b69c9"
+        app:lineThick="2dp"
+        app:scoreCircleColor="#002159"
+        app:scoreCircleRadius="60dp" />
+
 </android.support.constraint.ConstraintLayout>

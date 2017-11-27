@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PlantView">
+        <attr name="lineColor" format="color|reference" />
+        <attr name="circleColor" format="color|reference" />
+        <attr name="circleRadius" format="dimension|reference" />
+        <attr name="bottomTreeHeight" format="dimension|reference" />
+        <attr name="lineThick" format="dimension|reference" />
+        <attr name="scoreCircleColor" format="color|reference" />
+        <attr name="scoreCircleRadius" format="dimension|reference" />
+    </declare-styleable>
+
+</resources>

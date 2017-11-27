@@ -3,4 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="colorMove">#ffeea1</color>
+    <color name="colorExercise">#ff7075</color>
+    <color name="colorRelax">#29cf7f</color>
+    <color name="colorSleep">#b77fc7</color>
 </resources>

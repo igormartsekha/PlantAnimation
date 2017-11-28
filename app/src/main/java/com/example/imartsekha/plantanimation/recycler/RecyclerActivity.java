@@ -1,29 +1,18 @@
 package com.example.imartsekha.plantanimation.recycler;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.app.Activity;
-import android.graphics.Color;
-import android.graphics.Path;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.view.animation.LinearInterpolator;
 
 import com.example.imartsekha.plantanimation.R;
 import com.example.imartsekha.plantanimation.recycler.helper.BubbleCircle;
-import com.example.imartsekha.plantanimation.recycler.helper.BubblePlantHelper;
-import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
+import com.example.imartsekha.plantanimation.recycler.helper.ShapePlantAnimatedHelper;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -40,7 +29,7 @@ public class RecyclerActivity extends Activity {
     @BindView(R.id.overlay_view) ViewGroup overlayView;
     @BindView(R.id.move_view) ViewGroup moveView;
 
-    BubblePlantHelper bubblePlantHelper;
+    ShapePlantAnimatedHelper shapePlantAnimatedHelper;
 
 
     LinearLayoutManager linearLayoutManager;
@@ -62,14 +51,14 @@ public class RecyclerActivity extends Activity {
 
 
 
-        this.bubblePlantHelper = new BubblePlantHelper(overlayView);
-        bubblePlantHelper.attachToRecyclerView(recyclerView);
+        this.shapePlantAnimatedHelper = new ShapePlantAnimatedHelper(overlayView);
+        shapePlantAnimatedHelper.attachToRecyclerView(recyclerView);
 
         List<BubbleCircle.BubbleDirection> directions = Arrays.asList(
                 new BubbleCircle.BubbleDirection(SimpleAdapter.ITEM_TYPE_PLANT, SimpleAdapter.ITEM_TYPE_WEEK),
                 new BubbleCircle.BubbleDirection(SimpleAdapter.ITEM_TYPE_PLANT, SimpleAdapter.ITEM_TYPE_TIME_LINE));
 
-        this.bubblePlantHelper.addAnimateBubble(new BubbleCircle.Builder()
+        this.shapePlantAnimatedHelper.addAnimateBubble(new BubbleCircle.Builder()
                 .color(getResources().getColor(R.color.colorMove))
                 .score(100)
                 .text(getString(R.string.move))
@@ -77,7 +66,7 @@ public class RecyclerActivity extends Activity {
                 .bubbleDirections(directions)
                 .build());
 
-        this.bubblePlantHelper.addAnimateBubble(new BubbleCircle.Builder()
+        this.shapePlantAnimatedHelper.addAnimateBubble(new BubbleCircle.Builder()
                 .color(getResources().getColor(R.color.colorExercise))
                 .score(60)
                 .text(getString(R.string.exercise))
@@ -85,7 +74,7 @@ public class RecyclerActivity extends Activity {
                 .bubbleDirections(directions)
                 .build());
 
-        this.bubblePlantHelper.addAnimateBubble(new BubbleCircle.Builder()
+        this.shapePlantAnimatedHelper.addAnimateBubble(new BubbleCircle.Builder()
                 .color(getResources().getColor(R.color.colorRelax))
                 .score(40)
                 .text(getString(R.string.relax))
@@ -93,146 +82,13 @@ public class RecyclerActivity extends Activity {
                 .bubbleDirections(directions)
                 .build());
 
-        this.bubblePlantHelper.addAnimateBubble(new BubbleCircle.Builder()
+        this.shapePlantAnimatedHelper.addAnimateBubble(new BubbleCircle.Builder()
                 .color(getResources().getColor(R.color.colorSleep))
                 .score(10)
                 .text(getString(R.string.sleep))
                 .bubleId(SimpleAdapter.SHAPE_SLEEP)
                 .bubbleDirections(directions)
                 .build());
-
-
-
-
-
-//        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            float currentPosition = 0;
-//
-//            AnimatorSet animatorSet = new AnimatorSet();
-//
-//            float moveX;
-//            float moveY;
-//
-//            float moveHeight;
-//            float moveWidth;
-//
-//
-//            @Override
-//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-//                Log.d("Scroll", "state= "+newState);
-//                if(newState == 1) {
-////                    position = 0;
-//                } else if (newState == 2) {
-//
-//                }
-//                super.onScrollStateChanged(recyclerView, newState);
-//            }
-//
-//            @Override
-//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                super.onScrolled(recyclerView, dx, dy);
-//
-//                if(end_layout == null) {
-//                    applyBubbles(0);
-//                    if(end_layout == null) {
-//                        return;
-//                    } else {
-////                        final ObjectAnimator animY = ObjectAnimator.ofFloat(moveView, View.TRANSLATION_Y, moveView.getY(), end_layout.getY());
-////                        final ObjectAnimator animX = ObjectAnimator.ofFloat(moveView, View.TRANSLATION_X, moveView.getX(), end_layout.getX());
-//////
-////                        animatorSet.setInterpolator(new LinearInterpolator());
-////                        animatorSet.playTogether(animX, animY);
-////                        animatorSet.setDuration(1000);
-//
-//                        moveX = moveView.getX();
-//                        moveY = moveView.getY();
-//
-//                        moveHeight = moveView.getHeight();
-//                        moveWidth = moveView.getWidth();
-//                    }
-//                }
-//
-////                int recyclerHeight = recyclerView.getHeight();
-////
-//                currentPosition = currentPosition+dy;
-////                int percentPosition = 0;
-//
-////                if(currentPosition == 0) {
-////                    percentPosition = 0;
-////                } else {
-////                    percentPosition = (int) Math.abs((currentPosition/(float) recyclerHeight) * 100.0f);//(recyclerHeight/100);
-////                }
-//
-//                int offset = recyclerView.computeVerticalScrollOffset();
-//                int extent = recyclerView.computeVerticalScrollExtent();
-//                int range = recyclerView.computeVerticalScrollRange();
-//
-//                float percentage = 100 - (100.0f * offset / (float)(range - extent));
-//
-//                Log.d("Scroll", "Position = "+percentage + " and perc = "+percentage);
-//
-//
-////                animatorSet.setCurrentPlayTime(percentPosition*10);
-//
-//                float endY = end_layout.getY();
-//                float endX = end_layout.getX();
-//
-//
-//                float endHeight = end_layout.getHeight();
-//                float endWidth = end_layout.getWidth();
-//
-//
-//
-////                float newX=moveView.getX();
-////                float newY=moveView.getY();
-//
-//                if(percentage != 0) {
-//                    float newX = ((endX-moveX)/100.0f)*percentage;
-//                    float newY = ((endY-moveY)/100.0f)*percentage;
-//
-//                    float newHeight = ((endHeight-moveHeight)/100.0f)*percentage;
-//                    float newWidth = ((endWidth-moveWidth)/100.0f)*percentage;
-//
-//                    if(percentage == 100) {
-//                        newX = endX-moveX;
-//                        newY = endY-moveY;
-//
-//                        newHeight = endHeight;
-//                        newWidth = endWidth;
-//                    }
-//                    moveView.setX(moveX+newX);
-//                    moveView.setY(moveY+newY);
-//                } else {
-//                    moveView.setX(moveX);
-//                    moveView.setY(moveY);
-////                    moveView.setX(moveX);
-////                    moveView.setY(moveY);
-//                }
-//
-//
-//
-//
-//
-//
-//
-//
-////                int newMoveViewY = (int)moveView.getY()+dy;
-////                if(newMoveViewY < 0) {newMoveViewY = 0;}
-////                if(newMoveViewY > recyclerView.getHeight() - moveView.getHeight()) {newMoveViewY = recyclerView.getHeight() - moveView.getHeight();}
-////                moveView.setY(newMoveViewY);
-//
-//
-//                int position = 0;
-//                /*Log.d("Scroll", "position= "+ percentPosition
-//                        +"; dx= "+dx
-//                        +"; dy= "+dy
-//                        +"; moveViewX="+moveView.getX()
-//                        +"; moveViewY="+moveView.getY()
-//                        +"; recyclerHeight="+recyclerView.getHeight()
-//                        +"; currentPosition="+currentPosition);*/
-//
-//            }
-//        });
 
         ((LinearLayoutManager)recyclerView.getLayoutManager()).scrollToPositionWithOffset(simpleAdapter.getPositionViewType(simpleAdapter.ITEM_TYPE_PLANT), 0);
 
@@ -261,60 +117,4 @@ public class RecyclerActivity extends Activity {
 ////            Thread.sleep(1000);
 ////        }
 //    }
-
-    void applyBubbles(int index) {
-        RecyclerView.ViewHolder viewGroup = recyclerView.findViewHolderForLayoutPosition(index);
-
-        RecyclerView.ViewHolder plantView = recyclerView.findViewHolderForAdapterPosition(index);
-        RecyclerView.ViewHolder plantViewFirst = recyclerView.findViewHolderForLayoutPosition(index);
-
-
-
-        if(viewGroup == null)
-            return;
-
-
-        View viewPlant = viewGroup.itemView;
-
-        if(index == 1) {
-            start_layout = viewPlant.findViewById(R.id.plant_branch_1);
-        } else {
-            end_layout = viewPlant.findViewById(R.id.plant_branch_end_1);
-        }
-//        float x = layout_branch_first.getX();
-//        float y = layout_branch_first.getY();
-//
-//        float width = layout_branch_first.getWidth();
-//        float height = layout_branch_first.getHeight();
-//
-//        float centerX = x + width/2;
-//        float centerY = y + height/2;
-//
-//        moveView.setX(centerX- moveView.getWidth()/2);
-//        moveView.setY(centerY- moveView.getHeight()/2);
-//        RecyclerView.ViewHolder plantView = recyclerView.findViewHolderForAdapterPosition(index);
-//        RecyclerView.ViewHolder plantViewFirst = recyclerView.findViewHolderForLayoutPosition(index);
-//        View plantViewSecond = linearLayoutManager.getChildAt(index);
-//        View plantViewFirst1 = recyclerView.getChildAt(index);
-    }
-
-    void applyBubulesAtStart() {
-        float x = start_layout.getX();
-        float y = start_layout.getY();
-
-        float width = start_layout.getWidth();
-        float height = start_layout.getHeight();
-
-        float centerX = x + width/2;
-        float centerY = y + height/2;
-
-        moveView.setX(centerX- moveView.getWidth()/2);
-        moveView.setY(centerY- moveView.getHeight()/2);
-
-        try {
-//            playAnimation();
-        } catch (Exception e) {
-
-        }
-    }
 }

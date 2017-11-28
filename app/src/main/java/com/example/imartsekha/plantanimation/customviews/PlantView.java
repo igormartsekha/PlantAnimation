@@ -33,6 +33,8 @@ public class PlantView extends View {
 
     private int bottomTreeHeight;
 
+    private int halfWidth;
+
     Paint linePaint;
     Paint circlePaint;
     Paint scoreCirclePaint;
@@ -97,21 +99,16 @@ public class PlantView extends View {
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
-        //draw main container
-        this.mainRect.set(getPaddingLeft(), getPaddingTop(), getWidth()-getPaddingRight(), getHeight() -getPaddingBottom());
-//        canvas.drawRect(this.mainRect, circlePaint);
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
 
-        //draw bottom line
-        int bottomTreeEndPointX = getWidth()/2;
-        int bottomTreeEndPointY = this.mainRect.bottom-bottomTreeHeight;
-        canvas.drawLine(bottomTreeEndPointX,bottomTreeEndPointY,bottomTreeEndPointX, this.mainRect.bottom,linePaint);
 
-        // draw score circle
+        halfWidth = getWidth()/2;
+
+
         int scoreCircleEndY = mainRect.top+2*scoreCircleRadius;
-        canvas.drawCircle(getWidth()/2, this.mainRect.top+scoreCircleRadius, scoreCircleRadius, scoreCirclePaint);
-        canvas.drawLine(bottomTreeEndPointX,scoreCircleEndY, bottomTreeEndPointX, bottomTreeEndPointY, linePaint);
-        setScoreCircleInfo(getWidth()/2, this.mainRect.top+scoreCircleRadius, scoreCircleRadius);
+        this.mainRect.set(getPaddingLeft(), getPaddingTop(), getWidth()-getPaddingRight(), getHeight() -getPaddingBottom());
+        setScoreCircleInfo(halfWidth, this.mainRect.top+scoreCircleRadius, scoreCircleRadius);
 
         int previusCircleEnd = scoreCircleEndY;
         for(int i=0; i < CIRCLE_COUNT; i++) {
@@ -127,20 +124,45 @@ public class PlantView extends View {
             }
 
             int startY = previusCircleEnd+circleRadius;
-            canvas.drawCircle(startX, startY, circleRadius, circlePaint);
 
             // calculate point on 300
             double lineStartX = startX + circleRadius * Math.cos(Math.toRadians(anglePosition));
             double lineStartY = startY + circleRadius * Math.sin(Math.toRadians(anglePosition));
 
-//            canvas.drawCircle((float)lineStartX, (float)lineStartY, 20, scoreCirclePaint);
+//            canvas.drawLine((float) lineStartX, (float)lineStartY, bottomTreeEndPointX, bottomTreeEndPointY, linePaint);
+            previusCircleEnd = previusCircleEnd+2*circleRadius;
+            setCircleInfo(i, startX, startY, circleRadius);
+        }
+    }
 
+    @Override
+    protected void onDraw(Canvas canvas) {
+        //draw main container
+
+        //draw bottom line
+        int bottomTreeEndPointX = halfWidth;
+        int bottomTreeEndPointY = this.mainRect.bottom-bottomTreeHeight;
+        canvas.drawLine(bottomTreeEndPointX,bottomTreeEndPointY,bottomTreeEndPointX, this.mainRect.bottom,linePaint);
+
+        // draw score circle
+        int scoreCircleEndY = mainRect.top+2*scoreCircleRadius;
+        canvas.drawCircle(scoreCircleInfo.getX(), scoreCircleInfo.getY(), scoreCircleInfo.getRadius(), scoreCirclePaint);
+        canvas.drawLine(bottomTreeEndPointX,scoreCircleEndY, bottomTreeEndPointX, bottomTreeEndPointY, linePaint);
+
+        for(int i=0; i < CIRCLE_COUNT; i++) {
+            CircleInfo circleInfo = circles.get(i);
+            canvas.drawCircle(circleInfo.getX(), circleInfo.getY(), circleInfo.getRadius(), circlePaint);
+            int anglePosition = 0;
+            if(i%2 == 0) {
+                anglePosition = ANGLE_POINT_LINE_LEFT;
+            } else {
+                anglePosition = ANGLE_POINT_LINE_RIGHT;
+            }
+
+            double lineStartX = circleInfo.getX() + circleRadius * Math.cos(Math.toRadians(anglePosition));
+            double lineStartY = circleInfo.getY() + circleRadius * Math.sin(Math.toRadians(anglePosition));
 
             canvas.drawLine((float) lineStartX, (float)lineStartY, bottomTreeEndPointX, bottomTreeEndPointY, linePaint);
-
-            previusCircleEnd = previusCircleEnd+2*circleRadius;
-
-            setCircleInfo(i, startX, startY, circleRadius);
         }
     }
 

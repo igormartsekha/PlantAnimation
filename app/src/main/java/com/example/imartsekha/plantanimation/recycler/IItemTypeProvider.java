@@ -5,5 +5,5 @@ package com.example.imartsekha.plantanimation.recycler;
  */
 
 public interface IItemTypeProvider {
-    Shape provideCircle(String circleId);
+    Shape provideShape(String shapeId);
 }

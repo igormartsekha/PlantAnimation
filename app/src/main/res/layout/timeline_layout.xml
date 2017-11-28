@@ -2,9 +2,49 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/weak_layout"
+    android:id="@+id/timeline_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/holo_green_dark">
+
+    <FrameLayout
+        android:id="@+id/shape_move"
+        android:layout_width="30dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="184dp"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/border"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/shape_exercise"
+        android:layout_width="10dp"
+        android:layout_height="20dp"
+        android:layout_marginEnd="184dp"
+        android:layout_marginTop="196dp"
+        android:background="@drawable/border"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/shape_relax"
+        android:layout_width="40dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="172dp"
+        android:layout_marginTop="308dp"
+        android:background="@drawable/border"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/shape_sleep"
+        android:layout_width="50dp"
+        android:layout_height="70dp"
+        android:layout_marginEnd="164dp"
+        android:layout_marginTop="404dp"
+        android:background="@drawable/border"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></FrameLayout>
 
 </android.support.constraint.ConstraintLayout>

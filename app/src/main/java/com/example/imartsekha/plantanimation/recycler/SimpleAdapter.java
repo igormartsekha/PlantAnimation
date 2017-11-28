@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.example.imartsekha.plantanimation.R;
 import com.example.imartsekha.plantanimation.customviews.PlantView;
@@ -35,13 +36,13 @@ public class SimpleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 return new SimpleAdapterViewHolder(v);
             case ITEM_TYPE_WEEK:
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.weak_layout, parent, false);
-                return new SimpleAdapterViewHolder(v);
+                return new WeekViewHolder(v);
             case ITEM_TYPE_PLANT:
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.plant_layout, parent, false);
                 return new PlantViewHolder(v);
             case ITEM_TYPE_TIME_LINE:
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.timeline_layout, parent, false);
-                return new SimpleAdapterViewHolder(v);
+                return new WeekViewHolder(v);
             default:
                 throw new IllegalArgumentException();
         }
@@ -85,8 +86,43 @@ public class SimpleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
 
         @Override
-        public Shape provideCircle(String circleId) {
+        public Shape provideShape(String circleId) {
             return null;
+        }
+
+    }
+
+    static public class WeekViewHolder extends SimpleAdapterViewHolder implements IItemTypeProvider {
+        FrameLayout moveView;
+        FrameLayout exerciseView;
+        FrameLayout relaxView;
+        FrameLayout sleepView;
+
+        public WeekViewHolder(View itemView) {
+            super(itemView);
+            this.moveView = itemView.findViewById(R.id.shape_move);
+            this.exerciseView = itemView.findViewById(R.id.shape_exercise);
+            this.relaxView = itemView.findViewById(R.id.shape_relax);
+            this.sleepView = itemView.findViewById(R.id.shape_sleep);
+        }
+
+        @Override
+        public Shape provideShape(String circleId) {
+            View selected = null;
+            if(SHAPE_MOVE.equalsIgnoreCase(circleId)) {
+                selected = moveView;
+            } else if(SHAPE_EXERCISE.equalsIgnoreCase(circleId)) {
+                selected = exerciseView;
+            } else if(SHAPE_RELAX.equalsIgnoreCase(circleId)) {
+                selected = relaxView;
+            } else if(SHAPE_SLEEP.equalsIgnoreCase(circleId)) {
+                selected = sleepView;
+            }
+
+            if(selected == null)
+                throw new IllegalArgumentException();
+
+            return new Shape((int)selected.getX(), (int)selected.getY(), selected.getWidth(), selected.getHeight(), Shape.ShapeType.RECTANGLE);
         }
     }
 
@@ -99,7 +135,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
 
         @Override
-        public CircleShape provideCircle(String circleId) {
+        public Shape provideShape(String circleId) {
             int index = -1;
 
             if(SHAPE_MOVE.equalsIgnoreCase(circleId)) {
@@ -116,8 +152,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 throw new IllegalArgumentException();
 
             PlantView.CircleInfo circleInfo = plantView.getCircleInfo(index);
-
-            return new CircleShape(circleInfo.getX(), circleInfo.getY(), circleInfo.getRadius());
+            return new Shape((int)plantView.getX()+circleInfo.getX()-circleInfo.getRadius(), (int)plantView.getY()+circleInfo.getY()-circleInfo.getRadius(), 2*circleInfo.getRadius(), 2*circleInfo.getRadius(), Shape.ShapeType.CIRCLE);
         }
     }
 }

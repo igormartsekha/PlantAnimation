@@ -17,7 +17,7 @@ import android.view.View;
 public class BubbleView extends View {
     int backgroundColor = Color.BLACK;
 
-    Paint circlePaint = new Paint();
+    Paint circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     RectF rounRect = new RectF(0,0,0,0);
 
 

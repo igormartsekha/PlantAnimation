@@ -73,18 +73,18 @@ public class PlantView extends View {
 
 
         // init Paint for lines
-        this.linePaint = new Paint();
+        this.linePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         linePaint.setStyle(Paint.Style.FILL);
         linePaint.setColor(lineColor);
         linePaint.setStrokeWidth(lineThick);
 
         // init Paint for circles
-        this.circlePaint = new Paint();
+        this.circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         circlePaint.setStyle(Paint.Style.FILL);
         circlePaint.setColor(circleColor);
 
         // init Paint for score Circle
-        this.scoreCirclePaint = new Paint();
+        this.scoreCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         scoreCirclePaint.setStyle(Paint.Style.FILL);
         scoreCirclePaint.setColor(scoreCircleColor);
 

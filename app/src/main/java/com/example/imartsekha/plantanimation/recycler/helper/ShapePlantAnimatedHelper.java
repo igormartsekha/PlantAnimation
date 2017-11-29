@@ -1,5 +1,6 @@
 package com.example.imartsekha.plantanimation.recycler.helper;
 
+import android.animation.AnimatorSet;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -109,6 +110,8 @@ public class ShapePlantAnimatedHelper {
             float currentPosition = 0;
             float lastPercentage = 0;
 
+//            AnimatorSet animatorSet = new AnimatorSet();
+
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -155,6 +158,10 @@ public class ShapePlantAnimatedHelper {
 
 
                 if(isAllowTransfer) {
+//                    long currentPlayTime = (long)(percentage * (animatorSet.getTotalDuration()/100));
+
+//                    animatorSet.setCurrentPlayTime(currentPlayTime);
+
                     IItemTypeProvider startVH = null;
                     IItemTypeProvider finishVH = null;
 

@@ -7,18 +7,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_gradient">
 
-    <FrameLayout
-        android:id="@+id/plant_branch_1"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/border"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </FrameLayout>
-
     <com.example.imartsekha.plantanimation.customviews.PlantView
         android:id="@+id/plant_tree"
         android:layout_width="0dp"

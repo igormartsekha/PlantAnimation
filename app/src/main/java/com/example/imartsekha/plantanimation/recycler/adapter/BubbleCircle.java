@@ -1,11 +1,8 @@
-package com.example.imartsekha.plantanimation.recycler.helper;
+package com.example.imartsekha.plantanimation.recycler.adapter;
 
-import android.graphics.Path;
 import android.support.annotation.ColorInt;
-import android.support.annotation.StringRes;
 import android.view.View;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -47,6 +44,29 @@ public class BubbleCircle {
         }
     }
 
+    public int getColor() {
+        return color;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public String getBubleId() {
+        return bubleId;
+    }
+
+    public List<BubbleDirection> getBubbleDirections() {
+        return bubbleDirections;
+    }
+
+    public View getOverlayView() {
+        return overlayView;
+    }
 
     public static final class Builder {
         private int color;
@@ -88,7 +108,7 @@ public class BubbleCircle {
         }
     }
 
-    void setOverlayView(View overlayView) {
+    public void setOverlayView(View overlayView) {
         this.overlayView = overlayView;
     }
 }

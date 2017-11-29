@@ -11,8 +11,8 @@
         android:id="@+id/shape_move"
         android:layout_width="30dp"
         android:layout_height="40dp"
-        android:layout_marginEnd="184dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginEnd="164dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/border"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"></FrameLayout>
@@ -21,8 +21,8 @@
         android:id="@+id/shape_exercise"
         android:layout_width="10dp"
         android:layout_height="20dp"
-        android:layout_marginEnd="184dp"
-        android:layout_marginTop="196dp"
+        android:layout_marginEnd="140dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/border"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"></FrameLayout>
@@ -31,8 +31,8 @@
         android:id="@+id/shape_relax"
         android:layout_width="40dp"
         android:layout_height="60dp"
-        android:layout_marginEnd="172dp"
-        android:layout_marginTop="308dp"
+        android:layout_marginEnd="84dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/border"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"></FrameLayout>
@@ -41,8 +41,8 @@
         android:id="@+id/shape_sleep"
         android:layout_width="50dp"
         android:layout_height="70dp"
-        android:layout_marginEnd="164dp"
-        android:layout_marginTop="404dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/border"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"></FrameLayout>

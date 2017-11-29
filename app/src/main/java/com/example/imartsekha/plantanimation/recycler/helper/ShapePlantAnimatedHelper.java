@@ -321,8 +321,11 @@ public class ShapePlantAnimatedHelper {
                     percentage = 0;
                     lastPercentage = 0;
                 } else {
+//                    float heightPerPercent =((float)recyclerView.getHeight())/100.0f;
+//                    percentage = Math.abs((currentPosition/heightPerPercent)%100);
+
                     percentage = Math.abs((currentPosition/((float)recyclerView.getHeight()/100.0f)));
-//                    if(direction == DIRECTION_UP) {
+//                    if(direction == DIRECTION_DOWN) {
 //                        percentage = 100-percentage;
 //                    }
                 }
@@ -393,7 +396,7 @@ public class ShapePlantAnimatedHelper {
                                 stepHeight = finishHeight - finishHeight;
                             }
 
-                            if(lastPercentage > percentage) {
+                            if(lastPercentage >= percentage) {
                                 currentX = finishX - stepX;
                                 currentY = finishY - stepY;
 
@@ -408,17 +411,18 @@ public class ShapePlantAnimatedHelper {
                             }
 
 
-//                            Log.d("Scroll",
+                            Log.d("Scroll",
 //                                    "startX= "+startX+
 //                                        " finishX= "+finishX+
 //                                        " newX= "+stepX+
-//                                        " percentage= "+percentage +
+                                        " percentage= "+percentage +
+                                        " lastpercentage= "+lastPercentage
 //                                        " direction= "+((direction == DIRECTION_UP) ? "UP":"DOWN")+
 //                                        " currentPosition= "+currentPosition+
 //                                        " dy= "+dy+
 //                                        " firstIndex= "+firstVisibleItenIndex +
 //                                        " lastIndex= "+lastVisibleItenIndex
-//                            );
+                            );
 
 //                            Log.d("Scroll",
 //                                        "startWidth= "+startWidth+

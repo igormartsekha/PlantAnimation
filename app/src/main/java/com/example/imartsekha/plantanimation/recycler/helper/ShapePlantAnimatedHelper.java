@@ -2,6 +2,7 @@ package com.example.imartsekha.plantanimation.recycler.helper;
 
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -119,6 +120,8 @@ public class ShapePlantAnimatedHelper {
             float currentPosition = 0;
             float lastPercentage = 0;
 
+            ScrollingHelper scrollingHelper = new ScrollingHelper(OrientationHelper.HORIZONTAL);
+
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -127,45 +130,51 @@ public class ShapePlantAnimatedHelper {
                 int lastVisibleItenIndex = ((LinearLayoutManager)recyclerView.getLayoutManager()).findLastVisibleItemPosition();
 
 
-                // calculate current direction
-                int direction = -1;
-                if(currentPosition > currentPosition+dx) {
-                    direction = DIRECTION_LEFT;
-                } else {
-                    direction = DIRECTION_RIGHT;
-                }
+//                // calculate current direction
+//                int direction = -1;
+////                if(currentPosition > currentPosition+dx) {
+//                if(currentPosition > recyclerView.computeHorizontalScrollOffset()) {
+//                    direction = DIRECTION_LEFT;
+//                } else {
+//                    direction = DIRECTION_RIGHT;
+//                }
+//
+//                // calculate scroll item percent
+////                currentPosition = currentPosition+dx;
+//                currentPosition = recyclerView.computeHorizontalScrollOffset();
+//                float percentage = 0;
 
-                // calculate scroll item percent
-                currentPosition = currentPosition+dx;
-                float percentage = 0;
+//                if(currentPosition == 0) {
+//                    percentage = 0;
+//                    lastPercentage = 0;
+//                } else {
+//                    float widthPerPercent =((float)recyclerView.getWidth())/100.0f;
+//                    percentage = Math.abs((currentPosition/widthPerPercent)%100);
+//
+//                    if(direction == DIRECTION_RIGHT) {
+//                        percentage = 100-percentage;
+//                    }
+//                }
+//                if((int)percentage == 100) {
+//                    lastPercentage = 0;
+//                }
+//
+//                if (Math.abs(lastPercentage - percentage) > 50.0f) {
+//                    lastPercentage = percentage;
+//                }
 
-                if(currentPosition == 0) {
-                    percentage = 0;
-                    lastPercentage = 0;
-                } else {
-                    float widthPerPercent =((float)recyclerView.getWidth())/100.0f;
-                    percentage = Math.abs((currentPosition/widthPerPercent)%100);
-
-                    if(direction == DIRECTION_RIGHT) {
-                        percentage = 100-percentage;
-                    }
-                }
-                if((int)percentage == 100) {
-                    lastPercentage = 0;
-                }
-
-                if (Math.abs(lastPercentage - percentage) > 50.0f) {
-                    lastPercentage = percentage;
-                }
+                scrollingHelper.onScrolled(recyclerView, dx, dy);
+                float percentage = scrollingHelper.getCurrentProgress();
+                lastPercentage = scrollingHelper.getPreviousProgress();
 
 
                 IItemTypeProvider startVH = null;
                 IItemTypeProvider finishVH = null;
 
-                if(direction == DIRECTION_RIGHT) {
+                if(scrollingHelper.getCurrentDirection() == ScrollingHelper.DIRECTION.RIGHT/*direction == DIRECTION_RIGHT*/) {
                     startVH = (IItemTypeProvider)recyclerView.findViewHolderForLayoutPosition(lastVisibleItenIndex);
                     finishVH = (IItemTypeProvider)recyclerView.findViewHolderForLayoutPosition(firstVisibleItenIndex);
-                } else if(direction == DIRECTION_LEFT) {
+                } else if(scrollingHelper.getCurrentDirection() == ScrollingHelper.DIRECTION.LEFT /* direction == DIRECTION_LEFT*/) {
                     startVH = (IItemTypeProvider)recyclerView.findViewHolderForLayoutPosition(firstVisibleItenIndex);
                     finishVH = (IItemTypeProvider)recyclerView.findViewHolderForLayoutPosition(lastVisibleItenIndex);
                 }
@@ -215,7 +224,8 @@ public class ShapePlantAnimatedHelper {
 
 //                        if((lastPercentage == 0 && direction != DIRECTION_LEFT) || lastPercentage >= percentage) {
 //                        if((lastPercentage == 0 && direction != DIRECTION_LEFT) || (lastPercentage > percentage) || (lastPercentage >= percentage && direction == DIRECTION_RIGHT) ) {
-                        if(lastPercentage > percentage) {
+//                        if(lastPercentage >= percentage && scrollingHelper.getCurrentDirection() == ScrollingHelper.DIRECTION.LEFT/* == DIRECTION_LEFT*/) {
+                        if(scrollingHelper.isReverse()) {
                             currentX = finishX - stepX;
                             currentY = finishY - stepY;
 
@@ -239,9 +249,9 @@ public class ShapePlantAnimatedHelper {
 //                                            "currentY= "+currentY+
                                         " percentage= "+percentage +
                                         " lastPercentage= "+lastPercentage +
-                                        " direction= "+((direction == DIRECTION_LEFT) ? "LEFT":"RIGHT")+
-                                        " currentPosition= "+currentPosition+
-                                        " dx= "+dx+
+//                                        " direction= "+((direction == DIRECTION_LEFT) ? "LEFT":"RIGHT")+
+//                                        " currentPosition= "+currentPosition+
+//                                        " dx= "+dx+
                                         " firstIndex= "+firstVisibleItenIndex +
                                         " lastIndex= "+lastVisibleItenIndex
                             );
@@ -281,7 +291,8 @@ public class ShapePlantAnimatedHelper {
             float currentPosition = 0;
             float lastPercentage = 0;
 
-//            AnimatorSet animatorSet = new AnimatorSet();
+            ScrollingHelper scrollingHelper = new ScrollingHelper(OrientationHelper.VERTICAL);
+
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -305,38 +316,57 @@ public class ShapePlantAnimatedHelper {
                 }
                 boolean isAllowTransfer = allowAnimateBubbles.size() > 0;
 
+
                 // calculate current direction
-                int direction = -1;
-                if(currentPosition > currentPosition+dy) {
-                    direction = DIRECTION_UP;
-                } else {
-                    direction = DIRECTION_DOWN;
-                }
+//                int direction = -1;
+////                if(currentPosition > currentPosition+dy) {
+//                if(currentPosition > recyclerView.computeVerticalScrollOffset()) {
+//                    direction = DIRECTION_UP;
+//                } else {
+//                    direction = DIRECTION_DOWN;
+//                }
+//
+//                currentPosition = recyclerView.computeVerticalScrollOffset();
+//                float percentage = 0;
 
-                // calculate scroll item percent
-                currentPosition = currentPosition+dy;
-                float percentage = 0;
-
-                if(currentPosition == 0) {
-                    percentage = 0;
-                    lastPercentage = 0;
-                } else {
-//                    float heightPerPercent =((float)recyclerView.getHeight())/100.0f;
-//                    percentage = Math.abs((currentPosition/heightPerPercent)%100);
-
-                    percentage = Math.abs((currentPosition/((float)recyclerView.getHeight()/100.0f)));
-//                    if(direction == DIRECTION_DOWN) {
-//                        percentage = 100-percentage;
+//                if(currentPosition == 0) {
+//                    percentage = 0;
+//                    lastPercentage = 0;
+//                } else {
+//                    percentage = Math.abs((currentPosition/((float)recyclerView.computeVerticalScrollExtent()/100.0f)));
+//                    if(percentage < 50.0f) {
+//                        percentage = percentage%100;
+//                    } else if(percentage%100 == 0.0f) {
+//                        percentage = 100.0f;
+//                    } else {
+//                        percentage = percentage%100;
 //                    }
-                }
-                if((int)percentage == 100) {
-                    lastPercentage = 0;
-                }
+//                }
 
-                if (Math.abs(lastPercentage - percentage) > 50.0f) {
-                    lastPercentage = percentage;
-                }
+//                if(currentFirstVisibleIndex != firstVisibleItenIndex) {
+//                    currentPosition = 0.0f;
+//                }
 
+//                currentFirstVisibleIndex = firstVisibleItenIndex;
+
+                scrollingHelper.onScrolled(recyclerView, dx, dy);
+                float percentage = scrollingHelper.getCurrentProgress();
+//                if((int)percentage == 100) {
+//                    lastPercentage = 0;
+//                }
+                lastPercentage = scrollingHelper.getPreviousProgress();
+
+
+
+
+//                Log.d("Scroll", "offset= "+offset
+//                                            +" extend= "+extent
+//                                            +" range= "+range
+//                                            +" pecentage= "+percentage
+//                                            +" progressFinal= "+progressFinal
+//                                            +" direction= "+((direction == DIRECTION_DOWN) ? "DOWN":"UP")
+//                                            +" percentageSecond= "+percentageSecond
+//                );
 
                 if(isAllowTransfer) {
 //                    long currentPlayTime = (long)(percentage * (animatorSet.getTotalDuration()/100));
@@ -346,10 +376,10 @@ public class ShapePlantAnimatedHelper {
                     IItemTypeProvider startVH = null;
                     IItemTypeProvider finishVH = null;
 
-                    if(direction == DIRECTION_UP) {
+                    if(scrollingHelper.getCurrentDirection() == ScrollingHelper.DIRECTION.UP /*== DIRECTION_UP*/) {
                         startVH = (IItemTypeProvider)recyclerView.findViewHolderForLayoutPosition(lastVisibleItenIndex);
                         finishVH = (IItemTypeProvider)recyclerView.findViewHolderForLayoutPosition(firstVisibleItenIndex);
-                    } else if(direction == DIRECTION_DOWN) {
+                    } else if(scrollingHelper.getCurrentDirection() == ScrollingHelper.DIRECTION.DOWN/*direction == DIRECTION_DOWN*/) {
                         startVH = (IItemTypeProvider)recyclerView.findViewHolderForLayoutPosition(firstVisibleItenIndex);
                         finishVH = (IItemTypeProvider)recyclerView.findViewHolderForLayoutPosition(lastVisibleItenIndex);
                     }
@@ -396,10 +426,11 @@ public class ShapePlantAnimatedHelper {
                                 stepHeight = finishHeight - finishHeight;
                             }
 
-                            if(lastPercentage >= percentage) {
+//                            if(lastPercentage >= percentage && scrollingHelper.getCurrentDirection() == ScrollingHelper.DIRECTION.UP /* == DIRECTION_UP*/) {
+                            if(scrollingHelper.isReverse()) {
                                 currentX = finishX - stepX;
                                 currentY = finishY - stepY;
-
+//
                                 currentWidth = finishWidth - stepWidth;
                                 currentHeight = finishHeight - stepHeight;
                             } else {
@@ -412,9 +443,10 @@ public class ShapePlantAnimatedHelper {
 
 
                             Log.d("Scroll",
-//                                    "startX= "+startX+
-//                                        " finishX= "+finishX+
-//                                        " newX= "+stepX+
+                                    "startX= "+startX+
+                                        " finishX= "+finishX+
+                                        " newX= "+stepX+
+//                                        " percentageSecond= "+percentageSecond +
                                         " percentage= "+percentage +
                                         " lastpercentage= "+lastPercentage
 //                                        " direction= "+((direction == DIRECTION_UP) ? "UP":"DOWN")+

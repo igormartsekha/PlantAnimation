@@ -65,7 +65,7 @@ public class ScrollingHelper {
         return currentProgress;
     }
 
-    public float getPreviousProgress() {
+    private float getPreviousProgress() {
         return currentPrevProgress;
     }
 

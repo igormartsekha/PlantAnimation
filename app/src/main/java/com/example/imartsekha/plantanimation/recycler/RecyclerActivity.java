@@ -32,9 +32,6 @@ public class RecyclerActivity extends Activity {
         setContentView(R.layout.recycle_layout);
         ButterKnife.bind(this);
 
-//        DayAdapter dayAdapter = new DayAdapter(overlayView);
-//        recyclerView.setAdapter(dayAdapter);
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
 
         this.shapePlantAnimatedHelper = new ShapePlantAnimatedHelper(overlayView);
@@ -45,48 +42,9 @@ public class RecyclerActivity extends Activity {
         SnapHelper helper = new LinearSnapHelper();
         helper.attachToRecyclerView(recyclerView);
 
-
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(recyclerView.getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
-
         shapePlantAnimatedHelper.attachToVerticalRecyclerView(recyclerView);
-
-//        List<BubbleCircle.BubbleDirection> directions = Arrays.asList(
-//                new BubbleCircle.BubbleDirection(SimpleAdapter.ITEM_TYPE_PLANT, SimpleAdapter.ITEM_TYPE_WEEK),
-//                new BubbleCircle.BubbleDirection(SimpleAdapter.ITEM_TYPE_PLANT, SimpleAdapter.ITEM_TYPE_TIME_LINE));
-//
-//        this.shapePlantAnimatedHelper.addAnimateBubble(new BubbleCircle.Builder()
-//                .color(getResources().getColor(R.color.colorMove))
-//                .score(100)
-//                .text(getString(R.string.move))
-//                .bubleId(SimpleAdapter.SHAPE_MOVE)
-//                .bubbleDirections(directions)
-//                .build());
-//
-//        this.shapePlantAnimatedHelper.addAnimateBubble(new BubbleCircle.Builder()
-//                .color(getResources().getColor(R.color.colorExercise))
-//                .score(60)
-//                .text(getString(R.string.exercise))
-//                .bubleId(SimpleAdapter.SHAPE_EXERCISE)
-//                .bubbleDirections(directions)
-//                .build());
-//
-//        this.shapePlantAnimatedHelper.addAnimateBubble(new BubbleCircle.Builder()
-//                .color(getResources().getColor(R.color.colorRelax))
-//                .score(40)
-//                .text(getString(R.string.relax))
-//                .bubleId(SimpleAdapter.SHAPE_RELAX)
-//                .bubbleDirections(directions)
-//                .build());
-//
-//        this.shapePlantAnimatedHelper.addAnimateBubble(new BubbleCircle.Builder()
-//                .color(getResources().getColor(R.color.colorSleep))
-//                .score(10)
-//                .text(getString(R.string.sleep))
-//                .bubleId(SimpleAdapter.SHAPE_SLEEP)
-//                .bubbleDirections(directions)
-//                .build());
 
         ((LinearLayoutManager)recyclerView.getLayoutManager()).scrollToPositionWithOffset(simpleAdapter.getPositionViewType(SimpleAdapter.ITEM_TYPE_PLANT), 0);
 
